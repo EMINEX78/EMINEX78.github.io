@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyriamMyGreatLove</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #0c192c;
+      overflow-y: auto;
+    }
+
+    .container {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .bubbles {
+      position: relative;
+      display: flex;
+    }
+
+    .bubbles span {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      background-color: #ff2d75;
+      margin: 0 4px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 10px #4fc3dc44,
+                  0 0 50px #ff2d75,
+                  0 0 100px #ff2d75;
+      animation: animate 15s linear infinite;
+      animation-duration: calc(125s / var(--i));
+    }
+
+    .bubbles span:nth-child(even) {
+      background-color: #4fc3dc;
+    }
+
+    @keyframes animate {
+      0% {
+        transform: translateY(100vh) scale(0);
+      }
+      100% {
+        transform: translateY(10vh) scale(1);
+      }
+    }
+
+    .heart {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      background-color: #ff69b4;
+      transform: rotate(-45deg);
+      animation: heartbeat 1s infinite;
+      z-index: 2;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background-color: #ff69b4;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -75px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 75px;
+      top: 0;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1) rotate(-45deg);
+      }
+      50% {
+        transform: scale(1.2) rotate(-45deg);
+      }
+    }
+
+    .wave {
+      position: absolute;
+      top: 20vh;
+      width: 450px;
+      height: 450px;
+      border: 3px solid rgba(255, 105, 180, 0.8);
+      border-radius: 100%;
+      animation: pulse 2s infinite;
+      pointer-events: none;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+      z-index: 1;
+    }
+
+    .wave:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .wave:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.5) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(2.5) rotate(0deg);
+        opacity: 0;
+      }
+    }
+
+    /* Carta CSS */
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-top: 0;
+      z-index: -0;
+    }
+
+    .container-letter {
+      position: relative;
+      text-align: center;
+    }
+
+    .cover {
+      position: absolute;
+      border-left: 200px solid transparent;
+      border-right: 200px solid transparent;
+      border-top: 100px solid #fe3334;
+      border-bottom: 100px solid transparent;
+      transition: transform .75s;
+      transform-origin: top;    
+      transform: translateY(-300px);
+    }
+
+    .paper {
+      position: absolute;
+      padding: 1.5rem;
+      line-height: 1.5rem;
+      right: 5px;
+      z-index: -1;
+      background: white;
+      width: 390px;
+      height: 180px;
+      transition: all .75s;
+      text-align: center;
+      overflow: hidden;
+      top: 20px;
+    }
+
+    .letter {
+      border-left: 200px solid #ff989e;
+      border-right: 200px solid #ff989e;
+      border-top: 100px solid transparent;
+      border-bottom: 100px solid #ff858a;
+      position: relative;
+    }
+
+    .options {
+      display: flex;
+      gap: 5rem;
+      z-index: 0;
+      position: relative;
+      transform: translateY(-275px);
+    }
+
+    .options button {
+      color: #ff3234;
+      font-weight: 600;
+      border-radius: 3px;
+      background: #fad7df;
+      padding: 0.5rem 1rem;
+      border: 1px solid #fe3334;
+      cursor: pointer;
+    }
+
+    .options button:hover {
+      background: #ff989e;
+      color: white;
+    }
+
+    .open-cover {
+      transform: rotatex(180deg);
+    }
+
+    .open-paper {
+      animation: openPaper .5s forwards;
+    }
+
+    @keyframes openPaper {
+      0% {
+        top: 0;
+      }
+      100% {
+        top: -120px;
+      }
+    }
+
+    .close-paper {
+      animation: closePaper .5s forwards;
+    }
+
+    @keyframes closePaper {
+      0% {
+        top: -120px;
+      }
+      100% {
+        top: 0;
+      }
+    }
+
+    .heart-text {
+      display: none;
+      position: absolute;
+      top: 55%;
+      left: 46.5%;
+      margin: auto;
+      font-size: 3rem;
+      color: #fe3334;
+      animation: crecer 1s forwards;
+    }
+
+    @keyframes crecer {
+      0% {
+        scale: 1;
+        opacity: 1;
+      }
+      100% {
+        scale: 3;
+        opacity: 0;
+      }
+    }
+
+    .photo-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px; 
+      margin: 0 auto;
+    }
+
+    .photos-left, .photos-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .photos-left img, .photos-right img {
+      width: 150px; 
+      height: auto; 
+      margin: 10px 0; 
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="bubbles">
+      <span style="--i:11;"></span>
+      <span style="--i:12;"></span>
+      <span style="--i:24;"></span>
+      <span style="--i:10;"></span>
+      <span style="--i:14;"></span>
+      <span style="--i:23;"></span>
+      <span style="--i:18;"></span>
+      <span style="--i:16;"></span>
+      <span style="--i:19;"></span>
+      <span style="--i:20;"></span>
+      <span style="--i:22;"></span>
+      <span style="--i:25;"></span>
+      <span style="--i:18;"></span>
+      <span style="--i:21;"></span>
+      <span style="--i:15;"></span>
+      <span style="--i:13;"></span>
+      <span style="--i:26;"></span>
+      <span style="--i:17;"></span>
+      <span style="--i:13;"></span>
+      <span style="--i:28;"></span>
+      <span style="--i:11;"></span>
+      <span style="--i:12;"></span>
+      <span style="--i:24;"></span>
+      <span style="--i:10;"></span>
+      <span style="--i:14;"></span>
+      <span style="--i:23;"></span>
+      <span style="--i:18;"></span>
+      <span style="--i:16;"></span>
+      <span style="--i:19;"></span>
+      <span style="--i:20;"></span>
+      <span style="--i:22;"></span>
+      <span style="--i:25;"></span>
+      <span style="--i:18;"></span>
+      <span style="--i:21;"></span>
+      <span style="--i:15;"></span>
+      <span style="--i:13;"></span>
+      <span style="--i:26;"></span>
+      <span style="--i:17;"></span>
+      <span style="--i:13;"></span>
+      <span style="--i:28;"></span>
+    </div>
+  </div>
+  <div class="heart"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+
+  <main></main>
+    <div class="photo-container">
+      <div class="photos-left">
+        <img src="TuslindosOjos.jpg" alt="Amo tus Ojos bonitos">
+        <img src="TusBesos.jpg" alt="Amo besarte y que me beses">
+        <img src="NuestrasPulseras.jpg" alt="Amo las pulseras que me hiciste">
+      </div>
+
+      <div class="photos-right">
+        <img src="Amotododeti.jpg" alt="Amo todo de ti">
+        <img src="Tucarita.jpg" alt="Tu carita con esos ojos me hipnotizan">
+        <img src="Us.jpg" alt="Amo esta contigo">
+      </div>
+    </div>
+
+    <div class="container-letter">
+      <div class="cover"></div>
+      <span class="heart-text">♥MYRIAM♥</span>
+      <p class="paper" id="mainMessage">
+        ♥MYRIAM♥<br>
+        Más que una pareja, eres mi mundo entero. Amo todo de ti, me encanta y me obsesiona.<br>
+        No puedo estar sin ti. Nunca me quiero separar de ti porque te necesito.<br>
+        TE AMO DEMASIADO ♥MYRIAM♥
+      </p>
+      <div class="letter"></div>
+    </div>
+    <div class="options">
+      <button id="open">Abrir</button>
+      <button id="close">Cerrar</button>
+    </div>
+  </main>
+  <script src="index.js"></script>
+</body>
+</html>
